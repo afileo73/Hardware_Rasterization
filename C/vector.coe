@@ -1,0 +1,11 @@
+;width = 10
+memory_initialization_radix=16;
+memory_initialization_vector=
+32,32,3CE,
+32,3CE,3CE,
+32,32,32,
+32,3CE,32,
+3CE,32,3CE,
+3CE,3CE,3CE,
+3CE,32,32,
+3CE,3CE,32,

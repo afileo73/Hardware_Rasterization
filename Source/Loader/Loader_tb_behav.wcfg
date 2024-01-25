@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="Loader_tb_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="Loader_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="490.890 ns"></ZoomStartTime>
+      <ZoomEndTime time="572.091 ns"></ZoomEndTime>
+      <Cursor1Time time="525.470 ns"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="153"></NameColumnWidth>
+      <ValueColumnWidth column_width="88"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="27" />
+   <wvobject fp_name="/Loader_tb/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/clr" type="logic">
+      <obj_property name="ElementShortName">clr</obj_property>
+      <obj_property name="ObjectShortName">clr</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/go" type="logic">
+      <obj_property name="ElementShortName">go</obj_property>
+      <obj_property name="ObjectShortName">go</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/gonext" type="logic">
+      <obj_property name="ElementShortName">gonext</obj_property>
+      <obj_property name="ObjectShortName">gonext</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/x0" type="array">
+      <obj_property name="ElementShortName">x0[9:0]</obj_property>
+      <obj_property name="ObjectShortName">x0[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/y0" type="array">
+      <obj_property name="ElementShortName">y0[9:0]</obj_property>
+      <obj_property name="ObjectShortName">y0[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/z0" type="array">
+      <obj_property name="ElementShortName">z0[9:0]</obj_property>
+      <obj_property name="ObjectShortName">z0[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#00FFFF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/x1" type="array">
+      <obj_property name="ElementShortName">x1[9:0]</obj_property>
+      <obj_property name="ObjectShortName">x1[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/y1" type="array">
+      <obj_property name="ElementShortName">y1[9:0]</obj_property>
+      <obj_property name="ObjectShortName">y1[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/z1" type="array">
+      <obj_property name="ElementShortName">z1[9:0]</obj_property>
+      <obj_property name="ObjectShortName">z1[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FFFF00</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/x2" type="array">
+      <obj_property name="ElementShortName">x2[9:0]</obj_property>
+      <obj_property name="ObjectShortName">x2[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/y2" type="array">
+      <obj_property name="ElementShortName">y2[9:0]</obj_property>
+      <obj_property name="ObjectShortName">y2[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/z2" type="array">
+      <obj_property name="ElementShortName">z2[9:0]</obj_property>
+      <obj_property name="ObjectShortName">z2[9:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FAAFBE</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/logging" type="logic">
+      <obj_property name="ElementShortName">logging</obj_property>
+      <obj_property name="ObjectShortName">logging</obj_property>
+      <obj_property name="CustomSignalColor">#FF0000</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/ready" type="logic">
+      <obj_property name="ElementShortName">ready</obj_property>
+      <obj_property name="ObjectShortName">ready</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/readynext" type="logic">
+      <obj_property name="ElementShortName">readynext</obj_property>
+      <obj_property name="ObjectShortName">readynext</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/clock_period" type="other">
+      <obj_property name="ElementShortName">clock_period</obj_property>
+      <obj_property name="ObjectShortName">clock_period</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/LoadVectorComp/FSM/present_state" type="other">
+      <obj_property name="ElementShortName">present_state</obj_property>
+      <obj_property name="ObjectShortName">present_state</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/addrFace" type="array">
+      <obj_property name="ElementShortName">addrFace[5:0]</obj_property>
+      <obj_property name="ObjectShortName">addrFace[5:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/addrVect" type="array">
+      <obj_property name="ElementShortName">addrVect[4:0]</obj_property>
+      <obj_property name="ObjectShortName">addrVect[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/LoadVectorComp/incVectReg" type="logic">
+      <obj_property name="ElementShortName">incVectReg</obj_property>
+      <obj_property name="ObjectShortName">incVectReg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/LoadVectorComp/incFaceReg" type="logic">
+      <obj_property name="ElementShortName">incFaceReg</obj_property>
+      <obj_property name="ObjectShortName">incFaceReg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/LoadVectorComp/ldFaceReg" type="logic">
+      <obj_property name="ElementShortName">ldFaceReg</obj_property>
+      <obj_property name="ObjectShortName">ldFaceReg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/LoadVectorComp/ldVectReg" type="logic">
+      <obj_property name="ElementShortName">ldVectReg</obj_property>
+      <obj_property name="ObjectShortName">ldVectReg</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/dataFace" type="array">
+      <obj_property name="ElementShortName">dataFace[7:0]</obj_property>
+      <obj_property name="ObjectShortName">dataFace[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/dataVect" type="array">
+      <obj_property name="ElementShortName">dataVect[9:0]</obj_property>
+      <obj_property name="ObjectShortName">dataVect[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/Loader_tb/uut/LoadVectorComp/VectAddrReg/temp" type="array">
+      <obj_property name="ElementShortName">temp[4:0]</obj_property>
+      <obj_property name="ObjectShortName">temp[4:0]</obj_property>
+   </wvobject>
+</wave_config>
