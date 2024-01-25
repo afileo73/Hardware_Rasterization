@@ -4,23 +4,23 @@ use IEEE.std_logic_unsigned.all;
 
 entity LoadVector is
 	generic (
-        numfaces : integer;
-        VectAddrWidth : integer;
-        FaceAddrWidth : integer
+        G_NUMFACES : integer;
+        G_VECTADDRWIDTH : integer;
+        G_FACEADDRWIDTH : integer
     );
     port(
 		clk, clr, go, gonext : in std_logic;
         dataFace : in std_logic_vector(7 downto 0);
         ready, readynext : out std_logic;
         load : out std_logic_vector(8 downto 0);
-        addrVect : out std_logic_vector(VectAddrWidth-1 downto 0);
-        addrFace : out std_logic_vector(FaceAddrWidth-1 downto 0)
+        addrVect : out std_logic_vector(G_VECTADDRWIDTH-1 downto 0);
+        addrFace : out std_logic_vector(G_FACEADDRWIDTH-1 downto 0)
 	);
 end LoadVector;
 architecture Behavioral of LoadVector is 
 	component LoadVectorFSM is
         generic(
-            numfaces : integer
+            G_NUMFACES : integer
         );
         port(
             clk,clr,go,gonext : in STD_LOGIC;
@@ -52,7 +52,7 @@ begin
     
     FSM: LoadVectorFSM
     generic map(
-        numfaces => numfaces
+        G_NUMFACES => G_NUMFACES
     )
     port map(
         clk => clk,
@@ -69,9 +69,9 @@ begin
     );
 
     VectAddrReg: CountRegister
-    generic map(N => VectAddrWidth)
+    generic map(N => G_VECTADDRWIDTH)
     port map(
-        d => dataFacem3(VectAddrWidth-1 downto 0),
+        d => dataFacem3(G_VECTADDRWIDTH-1 downto 0),
         q => addrVect,
         ld => ldVectReg,
         inc => incVectReg,
@@ -80,7 +80,7 @@ begin
     );
 
     FaceAddrReg: CountRegister
-    generic map(N => FaceAddrWidth)
+    generic map(N => G_FACEADDRWIDTH)
     port map(
         d => (others => '0'),
         q => addrFace,

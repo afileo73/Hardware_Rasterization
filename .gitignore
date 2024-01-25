@@ -2,3 +2,5 @@
 Hardware_Rasterizer_Project/
 
 vunit_out/
+
+*.dtmp

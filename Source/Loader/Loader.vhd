@@ -1,164 +1,101 @@
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+-- Copyright 2023 Alex Fillmore
+-- afillmore@oakland.edu
+library ieee;
+use ieee.std_logic_1164.all;
 
-entity Loader is
+entity loader is
     generic (
-        numfaces : integer;
-        VectAddrWidth : integer;
-        FaceAddrWidth : integer
+        G_NUMFACES : integer;
+        G_VECTADDRWIDTH : integer;
+        G_FACEADDRWIDTH : integer;
+        G_VERTEXSIZE : integer := 12
     );
     port(
-        clk, clr, go, gonext : in std_logic;
-        ready, readynext : out std_logic;
-        x0, x1, x2, y0, y1, y2, z0, z1, z2 : out std_logic_vector(9 downto 0)
+        clk         : in std_logic;
+        clr         : in std_logic;
+        go          : in std_logic;
+        gonext      : in std_logic;
+        ready       : out std_logic;
+        readynext   : out std_logic;
+        x0          : out std_logic_vector(9 downto 0);
+        x1          : out std_logic_vector(9 downto 0);
+        x2          : out std_logic_vector(9 downto 0);
+        y0          : out std_logic_vector(9 downto 0);
+        y1          : out std_logic_vector(9 downto 0);
+        y2          : out std_logic_vector(9 downto 0);
+        z0          : out std_logic_vector(9 downto 0);
+        z1          : out std_logic_vector(9 downto 0);
+        z2          : out std_logic_vector(9 downto 0)
     );
-end Loader;
+end loader;
 
-architecture Behavioral of Loader is
+architecture behavioral of loader is
 
-    component LoadVector is
-        generic (
-            numfaces : integer;
-            VectAddrWidth : integer;
-            FaceAddrWidth : integer
-        );
-        port(
-            clk, clr, go, gonext : in std_logic;
-            dataFace : in std_logic_vector(7 downto 0);
-            ready, readynext : out std_logic;
-            load : out std_logic_vector(8 downto 0);
-            addrVect : out std_logic_vector(VectAddrWidth-1 downto 0);
-            addrFace : out std_logic_vector(FaceAddrWidth-1 downto 0)
-        );
-    end component;
-
-    component VectorRAM
-        port(
-            addra : in std_logic_vector(4 downto 0);
-            douta : out std_logic_vector(9 downto 0);
-            clka : in std_logic
-        );
-    end component;
-
-    component FaceROM
-        port(
-            addra : in std_logic_vector(5 downto 0);
-            douta : out std_logic_vector(7 downto 0);
-            clka : in std_logic
-        );
-    end component;
-
-    component NReg is
-        generic(N:integer := 8);
-        port(
-            load : in STD_LOGIC;
-            clk : in STD_LOGIC;
-            clr : in STD_LOGIC;
-            d : in STD_LOGIC_VECTOR(N-1 downto 0);
-            q : out STD_LOGIC_VECTOR(N-1 downto 0)
-            );
-   end component;
-
-    signal loadRegs : std_logic_vector(8 downto 0);
-    signal dataFace : std_logic_vector(7 downto 0);
-    signal dataVect : std_logic_vector(9 downto 0);
-    signal addrVect : std_logic_vector(VectAddrWidth-1 downto 0);
-    signal addrFace : std_logic_vector(FaceAddrWidth-1 downto 0);
+    signal loadregs : std_logic_vector(8 downto 0);
+    signal dataface : std_logic_vector(7 downto 0);
+    signal datavect : std_logic_vector(9 downto 0);
+    signal addrvect : std_logic_vector(G_VECTADDRWIDTH-1 downto 0);
+    signal addrface : std_logic_vector(G_FACEADDRWIDTH-1 downto 0);
+    signal vertex_data : std_logic_vector(G_VERTEXSIZE*9-1 downto 0);
 
 begin
 
-    LoadVectorComp: LoadVector
+    LoadVectorComp: entity work.LoadVector
     generic map(
-        numfaces => numfaces, VectAddrWidth => VectAddrWidth, FaceAddrWidth => FaceAddrWidth
+        G_NUMFACES => G_NUMFACES,
+        G_VECTADDRWIDTH => G_VECTADDRWIDTH,
+        G_FACEADDRWIDTH =>G_FACEADDRWIDTH
     )
     port map(
-        clk => clk, clr => clr, go => go, gonext => gonext, dataFace => dataFace, ready => ready, readynext => readynext, load => loadRegs, addrVect => addrVect, addrFace => addrFace
+        clk => clk,
+        clr => clr,
+        go => go,
+        gonext => gonext,
+        dataface => dataface,
+        ready => ready,
+        readynext => readynext,
+        load => loadregs,
+        addrvect => addrvect,
+        addrface => addrface
     );
-    
-    face: FaceROM
+
+    face: entity work.FaceROM
     port map(
-        addra => addrFace,
-        douta => dataFace,
+        addra => addrface,
+        douta => dataface,
         clka  => clk
     );
 
-    vect: VectorRAM
+    vect: entity work.VectorROM
     port map(
-        addra => addrVect,
-        douta => dataVect,
+        addra => addrvect,
+        douta => datavect,
         clka => clk
     );
 
-    x0Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(0), d => dataVect, q => x0
-    );
-    
-    y0Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(1), d => dataVect, q => y0
-    );
+    gen_reg: for i in 0 to 8 generate
+        nreg_inst: entity work.NReg
+        generic map (
+          N => G_VERTEXSIZE
+        )
+        port map (
+          load => loadregs(0),
+          clk  => clk,
+          clr  => clr,
+          d    => datavect,
+          q    => vertex_data((i+1)*G_VERTEXSIZE-1 downto i*G_VERTEXSIZE)
+        );
+    end generate gen_reg;
 
-    z0Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(2), d => dataVect, q => z0
-    );
+    x0 <= vertex_data((0+1)*G_VERTEXSIZE-1 downto 0*G_VERTEXSIZE);
+    y0 <= vertex_data((1+1)*G_VERTEXSIZE-1 downto 1*G_VERTEXSIZE);
+    z0 <= vertex_data((2+1)*G_VERTEXSIZE-1 downto 2*G_VERTEXSIZE);
+    x1 <= vertex_data((3+1)*G_VERTEXSIZE-1 downto 3*G_VERTEXSIZE);
+    y1 <= vertex_data((4+1)*G_VERTEXSIZE-1 downto 4*G_VERTEXSIZE);
+    z1 <= vertex_data((5+1)*G_VERTEXSIZE-1 downto 5*G_VERTEXSIZE);
+    x2 <= vertex_data((6+1)*G_VERTEXSIZE-1 downto 6*G_VERTEXSIZE);
+    y2 <= vertex_data((7+1)*G_VERTEXSIZE-1 downto 7*G_VERTEXSIZE);
+    z2 <= vertex_data((8+1)*G_VERTEXSIZE-1 downto 8*G_VERTEXSIZE);
 
-    x1Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(3), d => dataVect, q => x1
-    );
-    
-    y1Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(4), d => dataVect, q => y1
-    );
 
-    z1Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(5), d => dataVect, q => z1
-    );
-
-    x2Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(6), d => dataVect, q => x2
-    );
-    
-    y2Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(7), d => dataVect, q => y2
-    );
-
-    z2Reg: NReg
-    generic map(
-        N => 10
-    )
-    port map(
-        clk => clk, clr => clr, load => loadRegs(8), d => dataVect, q => z2
-    );
-
-end Behavioral;
+end behavioral;
