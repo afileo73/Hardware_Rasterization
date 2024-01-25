@@ -2,7 +2,11 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.std_logic_signed.all; 
 
+library vunit_lib;
+context vunit_lib.vunit_context;
+
 entity Loader_tb is
+    generic (runner_cfg : string);
 end Loader_tb;
 
 architecture Behavioral of Loader_tb is
@@ -35,7 +39,7 @@ architecture Behavioral of Loader_tb is
 
     --testbench
     signal logging : std_logic := '0';
-    constant clock_period : time := 10ns;
+    constant clock_period : time := 10 ns;
 
 begin
 
@@ -57,6 +61,7 @@ begin
 
     stim_proc: process
     begin
+        test_runner_setup(runner, runner_cfg);
         wait for clock_period;
         clr <= '0';
         go <= '1';
@@ -66,6 +71,10 @@ begin
             wait until (readynext = '1');
             gonext <= '0';
             logging <= '1';
+            info("Face " & integer'image(i) & ": "
+            & "(" & integer'image(conv_integer(x0)) & ", " & integer'image(conv_integer(y0)) & ", " & integer'image(conv_integer(z0)) & ") "
+            & "(" & integer'image(conv_integer(x1)) & ", " & integer'image(conv_integer(y1)) & ", " & integer'image(conv_integer(z1)) & ") "
+            & "(" & integer'image(conv_integer(x2)) & ", " & integer'image(conv_integer(y2)) & ", " & integer'image(conv_integer(z2)) & ") ");
             report "Face " & integer'image(i) & ": "
             & "(" & integer'image(conv_integer(x0)) & ", " & integer'image(conv_integer(y0)) & ", " & integer'image(conv_integer(z0)) & ") "
             & "(" & integer'image(conv_integer(x1)) & ", " & integer'image(conv_integer(y1)) & ", " & integer'image(conv_integer(z1)) & ") "
@@ -75,7 +84,9 @@ begin
             gonext <= '1';
             wait for clock_period * 2;
             gonext <= '0';
+            check(1 = 1);
         end loop;
+        test_runner_cleanup(runner); -- Simulation ends here
         --Hold Indefinetly
         wait;
     end process;
